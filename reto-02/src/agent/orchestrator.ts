@@ -1,3 +1,4 @@
+import { chatLanguage, chatText, actionText } from "./language.js";
 import { z } from "zod";
 import {
   contractSchema,
@@ -177,13 +178,16 @@ export class AgentOrchestrator {
     fallback: string,
     error?: string,
   ): ChatResponse {
+    const language = chatLanguage(session.messages);
+    const es = language === "es";
     const summaries = traces.map((trace) => {
       const result = trace.result as {
         ok?: boolean;
         error?: string;
         data?: Record<string, unknown>;
       };
-      if (!result.ok) return `${trace.name}: ${result.error ?? "Tool failed"}`;
+      if (!result.ok)
+        return `${trace.name}: ${chatText(result.error ?? "Tool failed", language)}`;
       const data = result.data ?? {};
       const message =
         (trace.arguments as { mensaje_id?: string })?.mensaje_id ?? "";
@@ -192,14 +196,14 @@ export class AgentOrchestrator {
           ["nuevo", "actualizacion"].includes(data.clasificacion) &&
           Array.isArray(data.requiere_revision) &&
           data.requiere_revision.length > 0;
-        return `${message}: ${data.clasificacion}${actionableReview ? " — human review required" : ""}`;
+        return `${message}: ${data.clasificacion}${actionableReview ? (es ? " — requiere revisión humana" : " — human review required") : ""}`;
       }
       if (typeof data.accion === "string")
-        return `${message}: ${data.accion} ${String(data.id_contrato ?? "")}`;
+        return `${message}: ${actionText(data.accion, language)} ${String(data.id_contrato ?? "")}`;
       if (Array.isArray(data.vencen))
-        return `Expiry alerts: ${data.vencen.map((row) => String((row as { id_contrato: string }).id_contrato)).join(", ") || "none"}; pending policies: ${Array.isArray(data.polizas_pendientes) ? data.polizas_pendientes.length : 0}.`;
+        return `${es ? "Alertas de vencimiento" : "Expiry alerts"}: ${data.vencen.map((row) => String((row as { id_contrato: string }).id_contrato)).join(", ") || (es ? "ninguna" : "none")}; ${es ? "pólizas pendientes" : "pending policies"}: ${Array.isArray(data.polizas_pendientes) ? data.polizas_pendientes.length : 0}.`;
       if (Array.isArray(data.mensajes))
-        return `Mailbox: ${data.mensajes.length} unprocessed messages. ${data.mensajes
+        return `${es ? "Buzón" : "Mailbox"}: ${data.mensajes.length} ${es ? "mensajes sin procesar" : "unprocessed messages"}. ${data.mensajes
           .filter(
             (row) =>
               (row as { clasificacion?: string }).clasificacion === "rechazado",
@@ -207,16 +211,20 @@ export class AgentOrchestrator {
           .map(
             (row) =>
               String((row as { id: string }).id) +
-              ": rechazado (no contract attachment)",
+              (es
+                ? ": rechazado (sin contrato adjunto)"
+                : ": rechazado (no contract attachment)"),
           )
           .join("; ")}`;
-      return `${trace.name}: completed.`;
+      return `${trace.name}: ${es ? "completado" : "completed"}.`;
     });
     let reply = summaries.length
-      ? `Tool-backed results:\n${summaries.join("\n")}\n\n${fallback}`
-      : fallback;
+      ? `${es ? "Resultados de las herramientas" : "Tool-backed results"}:\n${summaries.join("\n")}\n\n${chatText(fallback, language)}`
+      : chatText(fallback, language);
     if (session.pending)
-      reply += `\n\nHuman confirmation required for ${session.pending.mensajeId}: ${session.pending.fields.join(", ")}. Please provide the missing values. Do you explicitly confirm this exact candidate? No ambiguous contract has been registered.`;
+      reply += es
+        ? `\n\nSe requiere confirmación humana para ${session.pending.mensajeId}: ${session.pending.fields.join(", ")}. Proporcione los valores faltantes. ¿Confirma explícitamente este candidato exacto? No se ha registrado ningún contrato ambiguo.`
+        : `\n\nHuman confirmation required for ${session.pending.mensajeId}: ${session.pending.fields.join(", ")}. Please provide the missing values. Do you explicitly confirm this exact candidate? No ambiguous contract has been registered.`;
     session.messages.push({ role: "assistant", content: reply });
     return {
       sessionId: session.id,

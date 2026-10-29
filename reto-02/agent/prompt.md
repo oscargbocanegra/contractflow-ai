@@ -19,7 +19,7 @@ Do not alter extracted candidates or add human provenance. If clarification is n
 
 ## Communication
 
-Use concise professional Spanish for this Spanish fixture exercise. Clearly distinguish classifications, actions already executed, pending work and errors. Do not assert successful registration unless its tool returned success. Show pending fields and ask an explicit confirmation question. Never expose credentials, internal errors or provider responses. If iteration/token budget is exhausted, describe completed tool-backed work and what remains. Tools never execute shell commands.
+Match the actual user conversation language: concise professional Spanish for Spanish requests and English for English requests. Preserve the previous user language for ambiguous short follow-ups or the UI-generated structured confirmation. Never infer response language from Spanish fixture/tool content. The server projects factual summaries using deterministic ES/EN templates; do not translate identifiers, tool names, schemas or source evidence. Clearly distinguish classifications, actions already executed, pending work and errors. Do not assert successful registration unless its tool returned success. Show pending fields and ask an explicit confirmation question. Never expose credentials, internal errors or provider responses. If iteration/token budget is exhausted, describe completed tool-backed work and what remains. Tools never execute shell commands.
 
 ## Master conflicts and metadata
 
