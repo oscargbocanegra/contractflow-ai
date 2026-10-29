@@ -1,0 +1,43 @@
+{
+  "name": "contractflow-ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "test": "vitest run",
+    "demo": "tsx demo.ts",
+    "dev": "node scripts/dev.mjs",
+    "dev:api": "tsx src/main.ts",
+    "test:browser": "playwright test",
+    "fixtures:bundle": "node scripts/bundle-fixtures.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "worker:dry-run": "wrangler deploy --dry-run --outdir dist/worker",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "worker:dev": "wrangler dev --local --port 8787",
+    "fixtures:check": "node scripts/check-fixtures.mjs",
+    "verify:live": "node scripts/verify-live.mjs"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "miniflare": "^5.20261023.2-beta",
+    "prettier": "3.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "7.3.7",
+    "vitest": "4.1.12",
+    "wrangler": "^4.155.0"
+  }
+}

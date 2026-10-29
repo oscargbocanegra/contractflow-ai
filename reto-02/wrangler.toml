@@ -1,0 +1,32 @@
+send_metrics = false
+name = "contractflow-ai"
+main = "src/worker.ts"
+compatibility_date = "2026-10-28"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist/web"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "contractflow-ai"
+migrations_dir = "migrations"
+# Local-only configuration: no real remote database_id has been supplied.
+# Add the confirmed UUID returned by `wrangler d1 create` before deployment.
+
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+[vars]
+OPENAI_MODEL = "gpt-4.1"
+MAX_ITERATIONS = "25"
+MAX_SESSION_TOKENS = "200000"
+MAX_OUTPUT_TOKENS = "4000"
+MAX_SESSIONS = "100"
+MAX_TOTAL_TOKENS = "1000000"
+LLM_TIMEOUT_MS = "25000"

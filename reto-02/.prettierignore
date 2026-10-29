@@ -1,0 +1,13 @@
+fixtures/
+PRD.md
+src/generated/
+node_modules/
+out/
+dist/
+.wrangler/
+package-lock.json
+docs/G1-acceptance.md
+docs/G2-verification.md
+docs/G3-verification.md
+docs/G4-verification.md
+docs/G5-verification.md

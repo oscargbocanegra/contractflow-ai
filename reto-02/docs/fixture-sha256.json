@@ -1,0 +1,58 @@
+[
+  {
+    "path": "fixtures/reto-02/buzon/msg-001/contrato.txt",
+    "sha256": "12d2716423319a04c2b88b832b3634b5428e1c4e04b65afa3fe78b2900e4cc98"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-001/correo.json",
+    "sha256": "baa8eb2e905267335b253dc2c81f7abb19d7308481b77af6614de1c4338face2"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-002/contrato.txt",
+    "sha256": "c97ef45e4221a251c163240e24d04805c705f1b2f85b3fd3ae92addb2fd8e7af"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-002/correo.json",
+    "sha256": "2b0a102f8bc0ee4f1417ce0946c05f346e55f0138c43252e7ad9ef36fcf4891f"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-003/correo.json",
+    "sha256": "3041b574140c38a5edef4e6563e6887a129a33d42b910a73f2f1f5585a174711"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-003/otrosi.txt",
+    "sha256": "329c0245ca157c4feea0dd91482b321d1bc4ec7083274da3c92b5763905c6740"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-004/contrato.txt",
+    "sha256": "9524a87ac68d464bf7e77bdf620a0e5e519523a364e927ff97ff245e0bb0fd01"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-004/correo.json",
+    "sha256": "6d8112d543f974fff14393f541105e4dc05884c2e3a3063872150151a487dea8"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-005/correo.json",
+    "sha256": "ac126f211ac3e9bc32ed181054fde90d33c9df0e44cc88bfbb018f2c0b5799f0"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-005/cotizacion.txt",
+    "sha256": "1e21d04893f200518d21587d3facd76b9dfb0377436a611b1182f8205f1a9623"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-006/contrato.txt",
+    "sha256": "6d479a87faea26521c570c3aa59cb66df0be7b650d889b7c01624493f71aeb62"
+  },
+  {
+    "path": "fixtures/reto-02/buzon/msg-006/correo.json",
+    "sha256": "d6d74ea78710c838b4bdc9faed304ecee43c52e123c7899a677a00ce60af315d"
+  },
+  {
+    "path": "fixtures/reto-02/comerciales.json",
+    "sha256": "5c91aa86054a4a17f91d0fd95d3c3cb5db530bd262c1bb87e3791363069ca1f0"
+  },
+  {
+    "path": "fixtures/reto-02/maestro-contratos.csv",
+    "sha256": "b60a9a0165201876144cfc0025e9cf8f65e9cef89ef7aa47181ed4311aa2cbac"
+  }
+]
