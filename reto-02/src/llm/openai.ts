@@ -50,7 +50,9 @@ export class OpenAiAdapter implements LlmAdapter {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     try {
-      const response = await this.fetcher(
+      // Native Workers fetch must not receive the adapter as its receiver.
+      const fetcher = this.fetcher;
+      const response = await fetcher(
         "https://api.openai.com/v1/chat/completions",
         {
           method: "POST",
