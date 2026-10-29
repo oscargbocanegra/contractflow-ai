@@ -187,8 +187,13 @@ export class AgentOrchestrator {
       const data = result.data ?? {};
       const message =
         (trace.arguments as { mensaje_id?: string })?.mensaje_id ?? "";
-      if (typeof data.clasificacion === "string")
-        return `${message}: ${data.clasificacion}${Array.isArray(data.requiere_revision) && data.requiere_revision.length ? " — human review required" : ""}`;
+      if (typeof data.clasificacion === "string") {
+        const actionableReview =
+          ["nuevo", "actualizacion"].includes(data.clasificacion) &&
+          Array.isArray(data.requiere_revision) &&
+          data.requiere_revision.length > 0;
+        return `${message}: ${data.clasificacion}${actionableReview ? " — human review required" : ""}`;
+      }
       if (typeof data.accion === "string")
         return `${message}: ${data.accion} ${String(data.id_contrato ?? "")}`;
       if (Array.isArray(data.vencen))

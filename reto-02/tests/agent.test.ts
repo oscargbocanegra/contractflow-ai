@@ -192,6 +192,40 @@ describe("real OpenAI HTTP adapter with explicitly controlled fetch", () => {
   });
 });
 describe("bounded agent and independent human authority", () => {
+  it("duplicate informational review fields do not advertise an actionable human review", async () => {
+    const before = await repository.readState();
+    const adapter = new ScriptedAdapter([
+      () => response([call("contratos_extraer", { mensaje_id: "msg-004" })]),
+      (messages) =>
+        response([
+          call("contratos_validar", {
+            mensaje_id: "msg-004",
+            contrato: latestCandidate(messages),
+          }),
+        ]),
+    ]);
+    const orchestrator = agent(adapter);
+    const result = await orchestrator.chat({
+      sessionId: "duplicate-summary",
+      message: "Process msg-004 with hoy 2026-09-03",
+    });
+    const validation = result.toolCalls.find(
+      (trace) => trace.name === "contratos_validar",
+    )!.result as {
+      data: { clasificacion: string; requiere_revision: string[] };
+    };
+    expect(validation.data.clasificacion).toBe("duplicado");
+    expect(validation.data.requiere_revision.length).toBeGreaterThan(0);
+    expect(result.reply).toContain("msg-004: duplicado");
+    expect(result.reply).not.toContain("human review required");
+    expect(result.reply).not.toContain("Human confirmation required");
+    expect(result.needsConfirmation).toBe(false);
+    expect(result.pendingReview).toBeUndefined();
+    expect(
+      (await orchestrator.history("duplicate-summary"))!.pendingReview,
+    ).toBeUndefined();
+    expect(await repository.readState()).toEqual(before);
+  });
   it("global token ceiling and maximum session count prevent endless new-session spending", async () => {
     const adapter = new ScriptedAdapter([
       () => ({
@@ -338,6 +372,7 @@ describe("bounded agent and independent human authority", () => {
   it("review produces an explicit question/fields and never writes by itself", async () => {
     const { orchestrator, first, adapter } = await pendingAgent();
     expect(first.needsConfirmation).toBe(true);
+    expect(first.reply).toContain("human review required");
     expect(first.pendingReview!.fields).toContain("fecha_inicio");
     expect(first.reply).toContain("Please provide");
     expect(first.toolCalls.at(-1)!.name).toBe("contratos_alertas");
