@@ -1,6 +1,16 @@
-# Latest local verification — policy evidence correction
+# Current local validation — expanded matrix and HU3 conflict correction
 
-**Local-first status:** the independent audit's unsupported no-policy inference is corrected and mandatory README/SOLUCION are supplied. A successful real local GPT-4.1 six-case conversation and actual browser human confirmation are now verified in [LIVE-LOCAL-VERIFICATION.md](LIVE-LOCAL-VERIFICATION.md). Cloudflare remains LAST; no remote/public success or completed challenge is declared.
+The new eight-component matrix is in [ACCEPTANCE-CHECKLIST.md](ACCEPTANCE-CHECKLIST.md). Public deployment is excluded/deferred by user instruction and is not counted as passing. Git delivery is evidenced separately through actual commit and remote readback, not inferred from this validation report. Receipt-driven review remains OFF for this clone; no review receipt is invented.
+
+## Latest correction and acceptance evidence
+
+HU3 formerly treated a conflicting extracted customer as a safe update solely because extraction was confident. TDD first produced13 failing/2 passing master-conflict regressions. The correction adds contradictory identity/unexplained master differences to review, exempts only source-backed explicit amendment value/end changes, preserves RN1 no-op precedence, and leaves all contractual state unchanged without authorization. Original fixtures remain immutable.
+
+Expanded evidence includes strict nested Zod schema errors with code/issue paths, exact catalog region/name resolution, derived per-message/monthly arithmetic, an actual controlled-adapter pending-master-conflict path and a fifth controlled Chrome conflict-form test. Confidence is never fabricated on tools that do not return extracted fields. Cost and governance documents explicitly distinguish calculations/proposals from measured individual usage or implemented retention behavior.
+
+Fresh final command results and an independent latest-source live GPT-4.1/API/Chrome run are recorded below; earlier reports remain time-scoped evidence. The documentation writer made no paid provider, Cloudflare, review or Git operation.
+
+---
 
 ## Alignment and corrected audit finding
 
@@ -16,7 +26,7 @@ The corrected extractor:
 - Retains msg-002's actual explicit email evidence.
 - Does not invent explicit negative evidence for msg-004: it has none. Its policy fields remain unresolved, but RN1 still reports duplicate and performs no contractual write.
 
-## Fresh executed checks after normalization
+## Earlier executed checks before the expanded matrix
 
 | Check                                              | Actual result                       | Boundary                                                                                  |
 | -------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------- |
@@ -61,8 +71,35 @@ The verified exact zero-byte generated reto-02/20.19.0 artifact was removed; no 
 
 ## Current live evidence and remaining gates
 
-Real local GPT-4.1 returned snapshot gpt-4.1-2025-04-14 across14 HTTP200 calls, reporting86,391 input and4,472 output tokens. Before human approval:10 rows,3 history events,no msg-006 record,15 visible tool traces. The actual Chrome form showed blank unresolved dates/policy; the later explicitly labeled HUMAN TEST decision produced11 rows,4 history events and16 traces while provider requests stayed14. All14 fixture hashes remained unchanged. See the complete sanitized report.
+Real local GPT-4.1 returned snapshot gpt-4.1-2025-04-14 across14 HTTP200 calls, reporting89,313 input and4,464 output tokens (93,777 total) on the latest corrected candidate. Before human approval:10 rows,3 history events,no msg-006 record,15 visible tool traces. The actual Chrome form showed blank unresolved dates/policy; the later explicitly labeled HUMAN TEST decision produced11 rows,4 history events and16 traces while provider requests stayed14. All14 fixture hashes remained unchanged. See the complete sanitized report.
 
-Remaining: parent-owned native review/commit/actual GitHub push; Cloudflare authorization/remote D1/public deployment only LAST; clean-machine launch<2min and tablet/mobile checks remain unmeasured. GPT-4.1's official deprecation label is a lifecycle risk despite the successful observed run. Source defaults now match the user-selected tested model; no secret file was read, printed or copied by the documentation worker.
+Git delivery requires actual commit and remote readback under ordinary checks/hooks; native receipt review remains OFF. Public deployment/URL and remote D1 are excluded/deferred by user instruction. Clean-machine launch<2min and tablet/mobile checks remain unmeasured. GPT-4.1's official deprecation label is a lifecycle risk despite the successful observed run. Source defaults now match the user-selected tested model; no secret file was read, printed or copied by the documentation worker.
 
 No official test-start timestamp was provided, so official120-minute compliance is not claimed from an assumed clock origin. Historical G1–G5 reports retain their original-time facts; this report and the corrected source supersede prior absence-based policy assumptions.
+
+## Final expanded local execution results
+
+After all source normalization in this pass:
+
+| Command/check                              | Actual fresh result                                                                                                                            |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| npm run typecheck                          | PASS                                                                                                                                           |
+| npm test                                   | 85/85 PASS across6 files: original fixtures/domain, agent/API, real local D1, policy evidence,17 master-conflict cases and7 expanded contracts |
+| npm run build                              | PASS; existing dependency annotation warnings nonblocking                                                                                      |
+| npm run test:browser                       | 5/5 actual Chrome tests PASS at1440x900; new master-conflict UI case uses explicitly controlled HTTP, not a live provider                      |
+| npm run fixtures:check before/after demos  | 14/14 original hashes match                                                                                                                    |
+| DEMO_OUT=out/expanded-local-a npm run demo | Actual tools/no LLM PASS                                                                                                                       |
+| DEMO_OUT=out/expanded-local-b npm run demo | Independent actual tools/no LLM PASS                                                                                                           |
+| Compare both normalized summaries          | Byte-identical                                                                                                                                 |
+
+Actual original actions remain create/create/update/duplicate/reject/human_review; msg-006 only creates after labeled human test inputs. The master-conflict clone and unannounced changes refuse unconfirmed writes and preserve the complete contractual state; explicit msg-003 updates once, original msg-004 stays no-op. A current real orchestrator test surfaces source-backed identity conflicts and proves that saying 'reviewed' alone still authorizes nothing. The independent verifier then ran the corrected source against actual GPT-4.1 and Chrome; latest input/output totals are89,313/4,464, distinct from the historical86,391/4,472 planning baseline.
+
+The eight included components have runtime proof and/or explicitly labeled document/arithmetic inspection as appropriate. Deployment is excluded/deferred, not counted as success. No fresh-directory startup experiment was run; clean-machine timing and mobile/tablet remain unmeasured. No credential value was read/printed/copied; no Cloudflare/Gentle AI lifecycle operation, commit or push was performed by this writer. Ordinary repository checks apply under the user's clone review-OFF setting.
+
+## Independent final candidate verification
+
+After the writer stopped application edits, independent verification repeated typecheck/build,85/85 tests across6 files,5/5 actual Chrome tests at1440x900, scoped check-only formatting and14/14 hashes. Two actual isolated demos under out/validation-local-a and out/validation-local-b produced byte-identical summaries. The original CT-2026-012 identity-collision replay required review of cliente, nit_cliente, objeto, valor, fecha_inicio, fecha_fin, requiere_poliza, tipo_poliza and estado_poliza. Validation alone and unconfirmed registration left the **full contract state unchanged**. No additional blocking defect was found in this bounded eight-component scope.
+
+One actual full six-case turn returned gpt-4.1-2025-04-14 over14 HTTP200 calls:89,313 input +4,464 output =93,777 reported tokens. Before actual browser confirmation:10 rows/3 history/no006/15 traces; afterward11 rows/4 history/16 traces, with provider calls unchanged at14. Dates/policy started blank. Operator-supplied0COP,2026-09-01,2027-08-31 and framework-policy=false were HUMAN TEST decisions, never extracted source facts. All14 hashes matched afterward. Browser/server were stopped. The all-uncached rate estimate is$0.214338, **not an invoice**; the older cost-assumption JSON and derived monthly examples intentionally remain a historical planning reference.
+
+All eight requested components pass locally within the evidence boundaries in ACCEPTANCE-CHECKLIST.md. Real-provider evidence is in LIVE-LOCAL-VERIFICATION.md. Deployment is excluded/deferred, not passed; no official120-minute, clean-machine startup or mobile/tablet claim is made. No application edits followed this independent proof; this synchronization changes documentation only.

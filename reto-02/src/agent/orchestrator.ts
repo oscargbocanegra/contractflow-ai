@@ -42,6 +42,7 @@ export const toolDefinitions: ToolDefinition[] = Object.entries(registry).map(
 );
 export const confirmationValuesSchema = z
   .object({
+    id_contrato: z.string().min(1).optional(),
     valor: z.number().nonnegative().optional(),
     moneda: z.enum(["COP", "USD", "PEN", "PAB", "HNL"]).optional(),
     fecha_inicio: z.string().optional(),
@@ -572,6 +573,16 @@ export class AgentOrchestrator {
             guarded = true;
             result = {
               ok: false,
+              ...(error instanceof z.ZodError
+                ? {
+                    code: "schema_validation_error",
+                    issues: error.issues.map((issue) => ({
+                      path: issue.path.join("."),
+                      code: issue.code,
+                      message: issue.message,
+                    })),
+                  }
+                : {}),
               error:
                 error instanceof z.ZodError
                   ? "Invalid tool arguments"

@@ -1,13 +1,14 @@
 import {
   fieldKeys,
   similarity,
+  normalize,
   validDate,
   type Contract,
   type MasterRow,
   type MessageDocument,
   type Validation,
 } from "./contracts.js";
-import { identifiable } from "./extract.js";
+import { identifiable, contractAttachment } from "./extract.js";
 export function validate(
   doc: MessageDocument,
   candidate: Contract,
@@ -84,6 +85,42 @@ export function validate(
           antes: existing[key],
           despues: candidate[key].valor,
         };
+  }
+  if (existing && result.clasificacion === "actualizacion") {
+    const attachment = contractAttachment(doc);
+    const explicitAmendment =
+      attachment !== null && /^\s*OTROS[IÍ](?=\s|$)/i.test(attachment.text);
+    const documentSource = attachment
+      ? `fixtures/reto-02/buzon/${doc.correo.id}/${attachment.name}`
+      : "";
+    const conflicts: string[] = [];
+    for (const key of fieldKeys) {
+      if (key === "comercial" || existing[key] === candidate[key].valor)
+        continue;
+      if (
+        key === "cliente" &&
+        normalize(existing.cliente).replace(/\s/g, "") ===
+          normalize(candidate.cliente.valor ?? "").replace(/\s/g, "")
+      )
+        continue;
+      if (
+        key === "objeto" &&
+        normalize(existing.objeto) === normalize(candidate.objeto.valor ?? "")
+      )
+        continue;
+      const intendedChange =
+        explicitAmendment &&
+        baseline !== undefined &&
+        (key === "valor" || key === "fecha_fin") &&
+        baseline[key].fuente === documentSource &&
+        baseline[key].valor === candidate[key].valor;
+      if (!intendedChange) conflicts.push(key);
+    }
+    result.requiere_revision.push(...conflicts);
+    if (conflicts.length)
+      result.advertencias.push(
+        "Master conflict requires human review: " + conflicts.join(", "),
+      );
   }
   result.requiere_revision = [...new Set(result.requiere_revision)];
   return result;

@@ -268,3 +268,106 @@ test("real local frontend + backend: missing-key error is honest and session sur
   ).toBeGreaterThan(1);
   await page.screenshot({ path: "out/g4-chat-local.png", fullPage: true });
 });
+
+test("controlled master-identity conflict is highlighted with source decisions and exact confirmation binding", async ({
+  page,
+}) => {
+  let submitted: Record<string, unknown> | undefined;
+  const conflict = {
+    id: "identity-review",
+    mensajeId: "msg-001",
+    fields: ["cliente", "nit_cliente"],
+    values: { cliente: "INDUSTRIAS DELTA S.A.S.", nit_cliente: "890900111" },
+  };
+  await page.route("**/api/health", (route) =>
+    route.fulfill({
+      json: {
+        ok: true,
+        provider: "controlled-test",
+        model: "not-live",
+        configured: true,
+      },
+    }),
+  );
+  await page.route("**/api/sessions/*", (route) =>
+    route.fulfill({ status: 404, json: {} }),
+  );
+  await page.route("**/api/chat", (route) => {
+    const body = route.request().postDataJSON() as Record<string, unknown>;
+    if (body.confirmation) {
+      submitted = body;
+      return route.fulfill({
+        json: {
+          sessionId: body.sessionId,
+          reply: "Controlled identity decision received.",
+          toolCalls: [],
+          needsConfirmation: false,
+          tokensUsed: 0,
+        },
+      });
+    }
+    return route.fulfill({
+      json: {
+        sessionId: body.sessionId,
+        reply: "Master conflict requires human review.",
+        toolCalls: [
+          {
+            id: "conflict-trace",
+            name: "contratos_validar",
+            arguments: { mensaje_id: "msg-001" },
+            result: {
+              ok: true,
+              data: {
+                clasificacion: "actualizacion",
+                requiere_revision: conflict.fields,
+                diferencias: {
+                  cliente: {
+                    antes: "Clínica San Rafael S.A.",
+                    despues: conflict.values.cliente,
+                  },
+                  nit_cliente: {
+                    antes: "890903456",
+                    despues: conflict.values.nit_cliente,
+                  },
+                },
+              },
+            },
+          },
+        ],
+        needsConfirmation: true,
+        pendingReview: conflict,
+        tokensUsed: 0,
+      },
+    });
+  });
+  await page.goto("/");
+  await page
+    .getByLabel("Message", { exact: true })
+    .fill("Review source identity conflict");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Human confirmation required" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("cliente", { exact: true })).toHaveValue(
+    conflict.values.cliente,
+  );
+  await expect(page.getByLabel("nit_cliente", { exact: true })).toHaveValue(
+    conflict.values.nit_cliente,
+  );
+  await page.getByText("contratos_validar", { exact: true }).click();
+  await expect(page.getByText(/Clínica San Rafael S.A./)).toBeVisible();
+  expect(submitted).toBeUndefined();
+  await page
+    .getByRole("button", { name: "Confirm these values and register" })
+    .click();
+  await expect(
+    page.getByText("Controlled identity decision received.", { exact: true }),
+  ).toBeVisible();
+  expect(submitted).toMatchObject({
+    confirmation: {
+      pendingId: conflict.id,
+      mensajeId: "msg-001",
+      values: conflict.values,
+    },
+  });
+});

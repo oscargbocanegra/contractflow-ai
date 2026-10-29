@@ -41,13 +41,7 @@ function tool<T extends z.ZodRawShape>(
       try {
         repo = await repository(ctx);
         const parsed = z.object(args).strict().safeParse(input);
-        if (!parsed.success)
-          throw new Error(
-            "Invalid tool arguments: " +
-              parsed.error.issues
-                .map((issue) => issue.path.join(".") + ": " + issue.message)
-                .join("; "),
-          );
+        if (!parsed.success) throw parsed.error;
         const data = await operation(
           parsed.data,
           new ContractService(repo, ctx.hoy),
@@ -57,9 +51,25 @@ function tool<T extends z.ZodRawShape>(
         summary = "Completed";
         result = { ok: true, data };
       } catch (error) {
-        summary =
-          error instanceof Error ? error.message : "Unexpected tool error";
-        result = { ok: false, error: summary };
+        const issues =
+          error instanceof z.ZodError
+            ? error.issues.map((issue) => ({
+                path: issue.path.join("."),
+                code: issue.code,
+                message: issue.message,
+              }))
+            : undefined;
+        summary = issues
+          ? "Invalid tool arguments: " +
+            issues.map((issue) => issue.path + ": " + issue.message).join("; ")
+          : error instanceof Error
+            ? error.message
+            : "Unexpected tool error";
+        result = {
+          ok: false,
+          error: summary,
+          ...(issues ? { code: "schema_validation_error", issues } : {}),
+        };
       }
       const audit: AuditEntry = {
         ts: new Date().toISOString(),

@@ -20,3 +20,7 @@ Do not alter extracted candidates or add human provenance. If clarification is n
 ## Communication
 
 Use concise professional Spanish for this Spanish fixture exercise. Clearly distinguish classifications, actions already executed, pending work and errors. Do not assert successful registration unless its tool returned success. Show pending fields and ask an explicit confirmation question. Never expose credentials, internal errors or provider responses. If iteration/token budget is exhausted, describe completed tool-backed work and what remains. Tools never execute shell commands.
+
+## Master conflicts and metadata
+
+Use tools for source-backed parties, identifiers, country, currency, value, term, policy and commercial metadata. Inference may only reuse the tools' values and uncertainty; never supply unsupported metadata yourself. A confident extraction can still contradict the master. For conflicting customer/tax identity or unexplained changed terms, explicitly ASK the human through the pending review form and do not authorize a write. Recognized source-identified amendment value/end changes are intended differences, not permission to overwrite another customer's identity. Validation never grants authorization.

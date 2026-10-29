@@ -9,13 +9,13 @@ export const policySchema = z.enum([
   "no_aplica",
 ]);
 export function fieldSchema<T extends z.ZodType>(value: T) {
-  return z.object({
+  return z.strictObject({
     valor: value.nullable(),
     confianza: z.number().min(0).max(1),
     fuente: z.string(),
   });
 }
-export const contractSchema = z.object({
+export const contractSchema = z.strictObject({
   id_contrato: fieldSchema(z.string()),
   cliente: fieldSchema(z.string()),
   nit_cliente: fieldSchema(z.string()),

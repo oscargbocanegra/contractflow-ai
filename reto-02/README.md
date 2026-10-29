@@ -1,6 +1,6 @@
 # ContractFlow AI — local-first contract registration
 
-**Locally implemented and verified; challenge not yet complete.** Real local GPT-4.1 orchestration and browser human confirmation are verified. Native review/GitHub delivery and public Cloudflare deployment remain separate gates. See [sanitized live evidence](docs/LIVE-LOCAL-VERIFICATION.md). Start with the original [PRD](PRD.md), then [solution/governance](SOLUCION.md) and [current local evidence](docs/LOCAL-VERIFICATION.md).
+**Locally implemented and verified; challenge not yet complete.** Real local GPT-4.1 orchestration and browser human confirmation are verified. Git delivery requires actual commit/remote readback under ordinary checks/hooks; public deployment remains separate. Deployment is explicitly deferred and excluded from this expanded local checklist. See [sanitized live evidence](docs/LIVE-LOCAL-VERIFICATION.md). See the [expanded local acceptance matrix](docs/ACCEPTANCE-CHECKLIST.md). Start with the original [PRD](PRD.md), then [solution/governance](SOLUCION.md) and [current local evidence](docs/LOCAL-VERIFICATION.md).
 
 ## Run locally
 
@@ -42,7 +42,7 @@ Exact meanings and cost assumptions are in SOLUCION. Known missing-key failures 
 
 Use the PRD-example button or submit the original PRD prompt with explicit reference date2026-09-03. Inspect every tool call, its arguments and result. For msg-006, supply actual reviewed values in the highlighted form; unresolved dates and policy applicability start blank. The sample contract contains only a signature month, so the software does **not** invent a signature day from the email date.
 
-The form is the authorization mechanism. The literal PRD example sentence alone does not bypass it: a subsequent explicit user message plus exact pending/message IDs and structured values is required. Merely reviewing or validating never authorizes a write. The server rejects model self-confirmation, altered canonical candidates, stale master state and cross-session approvals.
+Master conflicts now require review even when extraction confidence is high; explicit amendment value/end changes remain legitimate, but another customer's identity is never silently overwritten. The form is the authorization mechanism. The literal PRD example sentence alone does not bypass it: a subsequent explicit user message plus exact pending/message IDs and structured values is required. Merely reviewing or validating never authorizes a write. The server rejects model self-confirmation, altered canonical candidates, stale master state and cross-session approvals.
 
 Only the random session identifier is stored in browser localStorage. The Node adapter keeps sessions in process memory; restarting it loses conversation state, not persisted contract files. The optional D1 adapter persists sessions and pending reviews. On timeout or malformed response, refresh history before retrying—an aborted browser request does not prove that the backend did nothing.
 
@@ -68,7 +68,7 @@ Browser tests use installed Chrome by default. Alternatively install Playwright 
 
 ## Real local provider smoke — before Cloudflare
 
-The independent live verification succeeded with returned model gpt-4.1-2025-04-14:14 HTTP200 provider calls,90,863 reported tokens and a subsequent real browser confirmation without another model call. The source/default example now matches the tested gpt-4.1 configuration. No credential is stored in source. For a later explicitly authorized repeat, privately configure the backend and start it:
+The fresh independent live verification succeeded with returned model gpt-4.1-2025-04-14:14 HTTP200 provider calls,93,777 reported tokens (89,313 input/4,464 output) on the latest corrected candidate and a subsequent real browser confirmation without another model call. The source/default example now matches the tested gpt-4.1 configuration. No credential is stored in source. For a later explicitly authorized repeat, privately configure the backend and start it:
 
 ```powershell
 npm run verify:live
@@ -108,6 +108,8 @@ A confirmation request uses the same session and the prior pending IDs:
 
 Placeholders are documentation, not valid defaults. `false` illustrates payload shape, not a prescribed policy decision. The server derives policy status from the explicit decision. Missing essential fields still block confirmed writes.
 
+Zod failures preserve readable `error:string` and additionally return `code:"schema_validation_error"` and `issues:[{path,code,message}]`. Outer args and nested contract/field schemas are strict; confidence belongs to extracted fields rather than being fabricated on every tool response. The typed commercial resolver returns the exact catalog email/name/region; no region column is added to the master.
+
 ## Output storage
 
 Local reference: out/sharepoint/maestro-contratos.csv, Contratos/<year>/<client-slug>/<id>.txt, historial.jsonl; out/procesados.json, out/log.jsonl and out/alertas.md. Original attachments are text, not fabricated PDFs.
@@ -138,4 +140,4 @@ For later authorized deployment: authenticate Cloudflare; create/select a real D
 - docs/G2-verification.md through docs/G5-verification.md: historical gate snapshots.
 - docs/LOCAL-VERIFICATION.md: latest authoritative local checks and remaining gaps.
 
-The supplied instruction PDF was reviewed for alignment with the PRD; it was not copied into this repository. Commits/push are parent-owned delivery steps; no AI coauthor trailers or secret-bearing files should be committed. GitHub delivery and all completion claims require actual commit/push verification.
+The supplied instruction PDF was reviewed for alignment with the PRD; it was not copied into this repository. Receipt-driven review is disabled for this clone by the user; do not enable or start it. Ordinary hooks/checks apply. Baseline fbbde09 was already pushed before this expanded validation; this report makes no new publish claim. Git delivery is established by actual commit and remote readback; no AI coauthor trailers or secret-bearing files should be committed. GitHub delivery and all completion claims require actual commit/push verification.

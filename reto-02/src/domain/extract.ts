@@ -1,3 +1,4 @@
+import { resolveCommercial } from "./commercials.js";
 import { extractPolicy } from "./policy.js";
 import {
   countrySchema,
@@ -105,24 +106,21 @@ export function extract(
     if (parties[2]!.toUpperCase() === "NIT") tax = tax.split("-")[0]!;
     result.nit_cliente = field(tax, source);
   }
+  const location = parties
+    ? text.slice(parties.index! + parties[0].length, text.indexOf("PERIFERIA"))
+    : "";
+  const countries: Array<[RegExp, "CO" | "EC" | "PE" | "PA" | "HN"]> = [
+    [/ecuador|quito/i, "EC"],
+    [/per[uú]|lima/i, "PE"],
+    [/panam[aá]/i, "PA"],
+    [/honduras/i, "HN"],
+    [/colombia|bogot[aá]|medell[ií]n|barranquilla/i, "CO"],
+  ];
+  const inferredCountry =
+    countries.find(([rx]) => rx.test(location))?.[1] ?? null;
+  if (inferredCountry !== null || !base)
+    result.pais = field(inferredCountry, source);
   if (!result.es_otrosi || !base) {
-    const location = parties
-      ? text.slice(
-          parties.index! + parties[0].length,
-          text.indexOf("PERIFERIA"),
-        )
-      : "";
-    const countries: Array<[RegExp, "CO" | "EC" | "PE" | "PA" | "HN"]> = [
-      [/ecuador|quito/i, "EC"],
-      [/per[uú]|lima/i, "PE"],
-      [/panam[aá]/i, "PA"],
-      [/honduras/i, "HN"],
-      [/colombia|bogot[aá]|medell[ií]n|barranquilla/i, "CO"],
-    ];
-    result.pais = field(
-      countries.find(([rx]) => rx.test(location))?.[1] ?? null,
-      source,
-    );
     const object =
       text
         .match(/PRIMERA\.\s*OBJETO\.\s*([\s\S]*?)(?=\n\s*SEGUNDA\.)/i)?.[1]
@@ -185,9 +183,7 @@ export function extract(
     }
   }
   if (!result.es_otrosi) extractPolicy(result, doc, text, source);
-  const commercial = commercials.find(
-    (item) => item.email.toLowerCase() === doc.correo.de.toLowerCase(),
-  );
+  const commercial = resolveCommercial(doc.correo.de, commercials);
   result.comercial = field(
     commercial?.nombre ?? null,
     commercial

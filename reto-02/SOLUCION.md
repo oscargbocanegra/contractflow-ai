@@ -1,6 +1,6 @@
 # ContractFlow AI — solution and contractual governance
 
-**Readiness:** deterministic local implementation, real provider adapter, chat and optional D1 hosting adapter are implemented. Local tests are documented separately from live-provider and production evidence. Successful real local GPT-4.1 six-case orchestration and actual browser human confirmation are verified. Native review/GitHub delivery and a public URL remain pending; this is not a declaration that the challenge is complete.
+**Readiness:** deterministic local implementation, real provider adapter, chat and optional D1 hosting adapter are implemented. Local tests are documented separately from live-provider and production evidence. Successful real local GPT-4.1 six-case orchestration and actual browser human confirmation are verified. Git delivery is established separately by actual commit/remote readback under ordinary checks/hooks; a public URL remains excluded/deferred by the user; this is not a declaration that the challenge is complete.
 
 ## 1. Problem in one sentence
 
@@ -44,13 +44,28 @@ User-selected and now source-default model: OpenAI gpt-4.1. Actual local executi
 
 Checked2026-10-28: text rates per1M tokens are input$2.00, cached input$0.50 and output$8.00. Formula: `(uncached_input×2.00 + cached_input×0.50 + output×8.00) / 1,000,000`. [Official pricing](https://developers.openai.com/api/docs/pricing)
 
-The live run reported86,391 input +4,472 output =90,863 tokens. Assuming **all input uncached**, the rate-based estimate is$0.208558, approximately$0.209 for the run—not an invoice. Cached-input details, taxes and hosting costs were not collected. No discount or precise charge is asserted.
+The latest corrected-source live run reported89,313 input +4,464 output =93,777 tokens across14 HTTP200 calls. Assuming **all input uncached**, the rate-based estimate is$0.214338 for this run—not an invoice. The earlier historical baseline reported86,391 input +4,472 output =90,863 tokens, estimated$0.208558 under the same assumption. Cached-input details, taxes and hosting costs were not collected. No discount or precise charge is asserted.
 
 **Hypothetical case illustration, not measured allocation:** cumulative8k–25k uncached input plus1k–4k output would cost$0.024–$0.082. Totals must include repeated context/tool schemas. Budget reservations are safety accounting, not billing. gpt-4.1-mini remains only an untested configurable alternative; no live mini success is claimed.
+
+### Per-message arithmetic and hypothetical monthly planning
+
+The historical planning baseline of86,391 input/4,472 output tokens covers one six-message batch and14 provider calls. No exclusive per-message attribution was collected. Dividing by6 gives an **arithmetic mean, not individually measured usage**:14,398.5 input and745.333333 output tokens per source message. Dividing the all-uncached run estimate$0.208558 by6 gives$0.034759667 per message as an arithmetic planning proxy, not a billed message price.
+
+| Hypothetical messages/month | Derived uncached-rate estimate |
+| --------------------------- | ------------------------------ |
+| 100                         | $3.475967, about$3.48          |
+| 1000                        | $34.759667, about$34.76        |
+
+Formula: `N × ((86391×2 + 4472×8)/1000000)/6`. These volumes are hypothetical—not observed monthly traffic or business metrics. Context reuse, case mix, cache, retries, model changes and errors can change usage; infrastructure, storage, network, tax/exchange and human operations are excluded. This historical baseline is intentionally retained, not silently replaced with the latest run or mixed with its usage. Inputs/rates are recorded in docs/COST-ASSUMPTIONS.json and executable arithmetic assertions check the derivation.
+
+Configured limits do not reset monthly: defaults200000 total token-budget units/session and1000000 aggregate units/process or D1 deployment, plus4000 output tokens/call and25 iterations/turn. At the highest listed configured-model text rate$8/1M, these correspond to conservative token-price ceilings of$1.60/session and$8/aggregate budget, excluding other fees; they are not invoices or authorization to spend. The monthly examples exceed the default aggregate allowance under this batch-derived workload, so an approved budget plan would be needed rather than silently resetting/increasing caps.
 
 ## 5. Extraction and confidence strategy
 
 Deterministic P0 extraction reads actual attachment text, resolves parties/identifier/country, normalizes numeric currency values, parses Spanish written dates with numeric day markers, and extracts object/policy evidence. Amendments merge explicitly unchanged master fields with source provenance and update changed value/end dates. Final candidates always pass deterministic validation again before writing.
+
+HU3 also checks confident source data against the master. Contradictory identity or unexplained changes go to requires_revision. Only value/end changes actually extracted from an explicit source-identified amendment are treated as intended differences; an amendment never excuses changed customer/tax/country identity. Cosmetic normalized client spelling does not create a conflict. NIT/object-similarity matching with a different contract ID is reviewed, not silently targeted. Validation alone does not authorize any write.
 
 Confidence is an engineering review convention, **not a calibrated statistical probability**: explicit recognized source values use1; absent values are null/0; demand value0 is0.6; currency inferred from a conditional policy context is0.7; derived month-term end dates are0.7. Anything below0.8 or conflicting requires review.
 
@@ -74,6 +89,14 @@ msg-006 has a demand-based value, a12-month term from signing and only an August
 | Monthly indicator         | `100 × invoiced contracts with a matched master record / distinct invoiced contracts in the month`. Finance supplies the denominator, the analyst reconciles exceptions, and management reviews the monthly trend and missing records. No actual percentage or achieved improvement is claimed.                                                                                                                                                                                                                                                          |
 
 Operational authorization must designate real people and an approved mailbox before using the process with real contracts. Review decisions and subsequent changes remain auditable; rotating personnel must not silently reset the process.
+
+### Lifecycle, traceability and retention proposal
+
+Proposed lifecycle: signed document received -> source/metadata extracted -> classification -> review when ambiguous/conflicting -> authorized registration or amendment -> expiry/policy monitoring -> owner-reviewed termination/closure -> controlled archive/retention. Termination handling and retention execution are operating proposals, not automated features claimed by this exercise.
+
+The administrative master owner should preserve contract/message IDs, original signed/amendment documents, exact source references and per-field confidence, previous/new values, reviewer identity/authority, decision time and resulting archive path. Existing tools expose field source/confidence; history records changes/message IDs; audit logs record execution outcomes and archives retain actual text. Node sessions are memory-backed: this is not durable authenticated reviewer identity or a complete production approval-record retention system. Production must persist and protect final reviewer/field provenance under an approved access/audit design. The PRD excludes authentication/roles; no RBAC implementation is claimed.
+
+**Retention is proposed and subject to company approval and legal/privacy validation.** The PRD does not prescribe a duration; no mandatory number of years or jurisdictional rule is invented. The record owner and authorized management should approve a schedule by document class/purpose, legal hold, access and disposal authority. Do not dispose of a record while an unresolved review/hold applies; after an approved schedule expires, require authorized auditable disposition. This code does not run retention deletion or claim a deployed retention policy. The same proposal covers signed contracts, amendments, termination acts, review decisions, master changes and audit records without silently discarding lineage.
 
 ## 7. Decisions and tradeoffs
 
@@ -115,13 +138,59 @@ Operational authorization must designate real people and an approved mailbox bef
 | Tablet/mobile                          | CSS included, not executed                                                                      | Only1440x900 desktop evidence exists                                |
 | Optional PDF/OCR/reusable module bonus | Not implemented                                                                                 | Not a mandatory P0 completion claim                                 |
 
-Latest executed counts/results are in docs/LOCAL-VERIFICATION.md and sanitized real-provider evidence is in docs/LIVE-LOCAL-VERIFICATION.md. Historical gate reports are snapshots at their original time; later evidence and this correction supersede their policy-default assumptions. Local D1/Worker tests do not equal production proof, and controlled model responses do not equal a live LLM test.
+Expanded local acceptance is mapped in docs/ACCEPTANCE-CHECKLIST.md. Latest executed counts/results are in docs/LOCAL-VERIFICATION.md and sanitized real-provider evidence is in docs/LIVE-LOCAL-VERIFICATION.md. Historical gate reports are snapshots at their original time; later evidence and this correction supersede their policy-default assumptions. Local D1/Worker tests do not equal production proof, and controlled model responses do not equal a live LLM test.
 
-## 10. Use of AI
+## 10. Use of AI, Gentle AI and the development method
 
-OpenAI Codex was used as the construction assistant for source analysis, scaffold, TypeScript implementation, deterministic extraction/tools, backend/provider protocol, React UI, optional D1 adapter, tests, debugging and documentation. Fresh delegated workers/audits compressed tasks and checked evidence; the human remains responsible for scope, contractual decisions, credentials and explainability of the submitted code.
+### Actual assistant and human ownership
 
-An initial AI-generated absence-of-guarantee=false implementation was discarded after the neutral-email audit demonstrated unsupported certainty. Other rejected approaches included substituting demo human dates for missing source facts, permitting model-written human provenance/confirmation, treating simulated provider success as live evidence, and inventing a deployment URL or measured cost. Tests and source checks—not an assistant's assurance—support the recorded outcomes. No AI coauthor trailer is added to commits; disclosure belongs here as required by the PRD.
+**OpenAI Codex was the development assistant; OpenAI GPT-4.1 is the application's runtime model.** These are different roles. Codex assisted with PRD/fixture analysis, acceptance mapping, TypeScript/Zod domain and tool code, the provider adapter and bounded orchestrator, React chat/confirmation, the optional persistence adapters, tests, debugging, audits and documentation. Runtime GPT-4.1 interprets user requests and selects tools; deterministic TypeScript owns critical contractual rules, final validation and write guards. A model-generated claim never substitutes for source or authorization.
+
+The human owns scope, business decisions, credentials, approval of external fixture transfer and explicit contractual confirmations. Codex assistance does not establish that the presenter understands every line. The presenter must inspect the submitted implementation and be able to explain it; the defense outline below supports that preparation rather than claiming automatic mastery. AI assistance is disclosed here as required by the PRD, not as an AI coauthor trailer in commits.
+
+### Requirements-guided, SDD-inspired — not a formal SDD execution
+
+The actual implementation route was **delegated direct**: one implementation writer at a time, parent coordination and fresh independent Codex audits. The user's G1–G7 delivery gates were used; they were not formal SDD phase commands or proof that an SDD engine ran.
+
+The implemented requirements-first discipline was:
+
+1. Read the original PRD/instructions and original fixtures before coding.
+2. Preserve literal RN1–RN7 and map requirements to acceptance criteria.
+3. Build the deterministic domain/tools and the no-model six-case demo before the real provider and UI.
+4. Add the real LLM/tool loop and explicit human boundary, then prove local behavior with tests, actual browser interactions and separately authorized live-model evidence.
+5. Run independent audits, correct evidenced defects, and record actual checks/limitations instead of deriving success from generated code or passing only the original fixtures.
+
+This is **SDD-inspired specification discipline**, not a retroactive claim of a formal SDD pipeline. No sdd-init, proposal/spec/design/tasks phase sequence, formal SDD artifact store or SDD phase-agent pipeline was requested, selected or executed. The acceptance matrix, architecture documentation and tests are ordinary project artifacts, not fabricated formal phase receipts.
+
+TDD was demonstrated **selectively on regressions**, not throughout the whole project: the policy-evidence regression first had5 failures/1 pass and then6 passing cases; the master-conflict regression first had13 failures/2 passes and later17 passing cases after expanded coverage. This does not claim strict RED–GREEN–REFACTOR for every implementation file.
+
+### Actual Gentle AI use and limits
+
+Gentle AI was **development tooling, not a runtime dependency**. The product path remains React -> Node or Worker HTTP API -> OpenAI tool-call loop -> deterministic TypeScript rules -> FileRepository or optional D1. No production contract request needs Gentle AI, CodeGraph or the development assistant to run.
+
+CodeGraph initialization was attempted and an index was created, but read-only status could not open the index. Source inspection therefore used the documented filesystem fallback. No graph-derived call path, dependency map or successful graph analysis is invented from that failure.
+
+The user consented to a native review attempt for an83-file candidate. Native planning selected a medium-risk, one-reliability-lens route with a200-line correction budget. Review-context rendering then reported a32-file limit against83 manifest files **before any native reviewer model run**. Selection and consent were not a completed review: there was no native PASS, approved review result or terminal receipt.
+
+The user explicitly authorized persistent **clone-only** review disable. No global disable, provider-repository repair or unpublished-tool workaround was performed. Delivery then followed ordinary repository tests/checks/hooks, and the earlier baseline fbbde09 was committed/pushed with actual parent-owned evidence. These facts do not approve subsequent changes or manufacture a receipt. Receipt-driven review remains OFF unless the user later explicitly changes it.
+
+Independent Codex audits did execute outside that blocked native review attempt. They found the unsafe absence-of-policy certainty and the master-identity overwrite gap; the local regression evidence records their corrections. Those audits are real evidence with their stated scope, not replacements falsely labeled as a native review PASS.
+
+### Rejected unsafe approaches
+
+An initial AI-generated absence-of-guarantee=false implementation was discarded after the neutral-email audit demonstrated unsupported certainty. Other rejected approaches included inventing msg-006's missing signature day from the email, allowing ambiguous records or model-forged human provenance/self-authorization to write, presenting controlled/simulated provider results as real LLM success, and fabricating a public deployment URL or measured monetary charge. The source-grounded master-conflict audit also showed why confident extraction alone is insufficient authorization to overwrite the master.
+
+No provider credential value, raw user prompt, private source-document path or assumed official two-hour result is needed for this disclosure. Business contractual governance remains the separate proposal in section6; development-tool governance does not substitute for it.
+
+### Defense preparation outline
+
+- Explain one full user request through prompt, adapter, tool call/result, bounded loop and UI trace.
+- Explain source/confidence/null handling, RN1 duplicate precedence and intended amendment differences versus master conflicts.
+- Show why validation or saying 'reviewed' does not authorize a write; explain the subsequent session/candidate/master-bound human decision.
+- Trace one create, update, duplicate, reject and blocked review through CSV/history/archive or the optional D1 transaction.
+- Separate deterministic tests, controlled browser cases, actual latest-source and historical GPT-4.1 evidence and what was never verified publicly.
+- Explain the model-cost calculation/assumptions, proposed business governance/retention and remaining operational limits.
+- Identify which code/decisions were AI-assisted, what was rejected, and what the presenter has personally reviewed and can defend.
 
 ## 11. Production risks and mitigation
 
@@ -134,4 +203,4 @@ An initial AI-generated absence-of-guarantee=false implementation was discarded 
 - **Abuse/operations:** durable global/session budgets and session-count limits reduce spend, but production still needs account-level caps, request controls, monitoring and authorized cleanup/recovery procedures. No public reset exists.
 - **Process adoption:** automation cannot register documents commercials never send. Approve and operate the proposed governance campaign/indicator; do not claim the campaign or business impact already happened.
 
-**Completion gate:** real local LLM/HITL acceptance is closed by the recorded live evidence. Finish native review and actual GitHub delivery through normal hooks, and only then deploy/verify Cloudflare per the user's local-first order. Until those actual proofs exist, the challenge remains incomplete.
+**Completion gate:** real local LLM/HITL acceptance is closed by the recorded live evidence. Follow the user-disabled receipt-review setting and ordinary repository checks/normal hooks for actual GitHub updates, and only then deploy/verify Cloudflare per the user's local-first order. Until those actual proofs exist, the challenge remains incomplete.

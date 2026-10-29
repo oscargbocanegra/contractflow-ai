@@ -1,0 +1,14 @@
+{
+  "observed_batch": {
+    "messages": 6,
+    "provider_calls": 14,
+    "input_tokens": 86391,
+    "output_tokens": 4472
+  },
+  "model": "gpt-4.1",
+  "rates_usd_per_million": { "input": 2, "cached_input": 0.5, "output": 8 },
+  "source": "https://developers.openai.com/api/docs/models/gpt-4.1",
+  "checked_local_date": "2026-10-28",
+  "cached_input_detail": "not collected",
+  "monthly_volumes_hypothetical": [100, 1000]
+}
