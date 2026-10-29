@@ -13,6 +13,7 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "contractflow-ai"
+database_id = "74da954f-b5da-48df-a838-15e8ac2dd2be"
 migrations_dir = "migrations"
 # Local-only configuration: no real remote database_id has been supplied.
 # Add the confirmed UUID returned by `wrangler d1 create` before deployment.
